@@ -6,11 +6,15 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { ArrowLeft, Upload, Send, Bot, User, FileText, Settings, File, CheckCircle, AlertCircle, Loader2, Download } from 'lucide-react'
+import { ArrowLeft, Upload, Send, Bot, User, FileText, Settings, File, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useGroqChat } from '@/hooks/useGroqChat'
 import { usePdfConverter } from '@/hooks/usePdfConverter'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+// Import markdown components
+import ReactMarkdown from 'react-markdown'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkGfm from 'remark-gfm'
 
 interface ChatbotDemoProps {
   onBack: () => void
@@ -151,50 +155,42 @@ Be specific, constructive, and provide concrete examples where possible. Format 
     return basePrompt
   }
 
-  const formatMessageContent = (content: string) => {
-    // Split content into paragraphs and format properly
-    const paragraphs = content.split('\n\n')
-    
-    return paragraphs.map((paragraph, index) => {
-      const trimmedParagraph = paragraph.trim()
-      if (!trimmedParagraph) return null
-
-      // Check if it's a header (starts with ** or contains **)
-      if (trimmedParagraph.includes('**')) {
-        return (
-          <div key={index} className="mb-3">
-            {trimmedParagraph.split('**').map((part, i) => 
-              i % 2 === 0 ? (
-                <span key={i}>{part}</span>
-              ) : (
-                <span key={i} className="font-semibold text-purple-300">{part}</span>
-              )
-            )}
-          </div>
-        )
-      }
-
-      // Check if it's a list item (starts with number or bullet)
-      if (trimmedParagraph.match(/^\d+\./) || trimmedParagraph.startsWith('•') || trimmedParagraph.startsWith('-')) {
-        const lines = trimmedParagraph.split('\n')
-        return (
-          <div key={index} className="mb-3">
-            {lines.map((line, i) => (
-              <div key={i} className="mb-1 pl-2">
-                {line.trim()}
-              </div>
-            ))}
-          </div>
-        )
-      }
-
-      // Regular paragraph
-      return (
-        <div key={index} className="mb-3 leading-relaxed">
-          {trimmedParagraph}
-        </div>
-      )
-    }).filter(Boolean)
+  const renderMarkdown = (content: string) => {
+    return (
+      <ReactMarkdown 
+        className="markdown-content text-sm sm:text-base" 
+        rehypePlugins={[rehypeSanitize]}
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({node, ...props}) => <h1 {...props} className="text-xl font-bold my-3 text-purple-300" />,
+          h2: ({node, ...props}) => <h2 {...props} className="text-lg font-bold my-2 text-purple-300" />,
+          h3: ({node, ...props}) => <h3 {...props} className="text-md font-bold my-2 text-purple-300" />,
+          h4: ({node, ...props}) => <h4 {...props} className="font-bold my-2 text-purple-300" />,
+          p: ({node, ...props}) => <p {...props} className="mb-3 leading-relaxed" />,
+          ul: ({node, ...props}) => <ul {...props} className="mb-3 ml-4 list-disc space-y-1" />,
+          ol: ({node, ...props}) => <ol {...props} className="mb-3 ml-4 list-decimal space-y-1" />,
+          li: ({node, ...props}) => <li {...props} className="mb-1 pl-1" />,
+          a: ({node, ...props}) => <a {...props} className="text-blue-400 hover:underline" />,
+          blockquote: ({node, ...props}) => <blockquote {...props} className="border-l-4 border-purple-400/30 pl-3 my-2 italic text-gray-300" />,
+          code: ({node, inline, ...props}) => 
+            inline ? 
+              <code {...props} className="bg-white/10 px-1 py-0.5 rounded text-purple-200 font-mono text-sm" /> : 
+              <code {...props} className="block bg-black/30 p-3 rounded-md font-mono text-sm whitespace-pre-wrap my-3 text-purple-200 overflow-auto" />,
+          pre: ({node, ...props}) => <pre {...props} className="my-3" />,
+          strong: ({node, ...props}) => <strong {...props} className="font-semibold text-purple-300" />,
+          em: ({node, ...props}) => <em {...props} className="italic text-cyan-300" />,
+          table: ({node, ...props}) => <table {...props} className="border-collapse table-auto w-full my-3" />,
+          thead: ({node, ...props}) => <thead {...props} className="bg-white/5" />,
+          tbody: ({node, ...props}) => <tbody {...props} />,
+          tr: ({node, ...props}) => <tr {...props} className="border-b border-white/10" />,
+          th: ({node, ...props}) => <th {...props} className="p-2 text-left text-purple-300 font-semibold" />,
+          td: ({node, ...props}) => <td {...props} className="p-2" />,
+          hr: ({node, ...props}) => <hr {...props} className="my-4 border-white/20" />,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    )
   }
 
   const handleSendMessage = async () => {
@@ -469,9 +465,7 @@ Be specific, constructive, and provide concrete examples where possible. Format 
                         </div>
                         <div className="break-words overflow-wrap-anywhere hyphens-auto">
                           {message.role === 'assistant' ? (
-                            <div className="space-y-2">
-                              {formatMessageContent(message.content)}
-                            </div>
+                            renderMarkdown(message.content)
                           ) : (
                             <div className="whitespace-pre-wrap leading-relaxed text-sm sm:text-base">
                               {message.content}
