@@ -175,5 +175,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support and questions:
-- Email: bsf1800638@ue.edu.pk
-- LinkedIn: [Dilawar Ali](https://www.linkedin.com/in/dilawar-ali-02a2382a5/)
+- Email: 2022cs35@student.edu.pk
+- LinkedIn: [Abdullah Iftakhar](https://www.linkedin.com/in/dilawar-ali-02a2382a5/)
