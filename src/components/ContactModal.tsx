@@ -13,12 +13,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const handleEmailClick = () => {
     console.log('Opening email client')
-    window.location.href = 'mailto:2022cs35@student.edu.pk'
+    window.location.href = 'mailto:2022cs48@student.edu.pk'
   }
 
   const handleLinkedInClick = () => {
     console.log('Opening LinkedIn profile')
-    window.open('https://www.linkedin.com/in/dilawar-ali-02a2382a5/', '_blank')
+    window.open('https://www.linkedin.com/in/khuram-iqbal/', '_blank')
   }
 
   return (
@@ -47,7 +47,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   </div>
                   <div className="flex-1 text-left">
                     <div className="font-semibold text-white text-base">Send Email</div>
-                    <div className="text-sm text-gray-400 break-all">2022cs35@student.edu.pk</div>
+                    <div className="text-sm text-gray-400 break-all">2022cs48@student.edu.pk</div>
                   </div>
                   <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
                 </div>
