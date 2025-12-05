@@ -24,8 +24,12 @@ export function LandingPage({ onDemo, onContact }: LandingPageProps) {
           </div>
           <Button 
             variant="outline" 
-            className="border-purple-400/50 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-400 transition-all duration-300 text-sm sm:text-base bg-transparent"
-            onClick={onContact}
+            className="border-purple-400/50 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-400 transition-all duration-300 text-sm sm:text-base bg-transparent cursor-pointer"
+            onClick={() => {
+              console.log('Contact Us clicked')
+              onContact()
+            }}
+            type="button"
           >
             Contact Us
           </Button>
@@ -55,8 +59,12 @@ export function LandingPage({ onDemo, onContact }: LandingPageProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
               <Button 
                 size="lg"
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
-                onClick={onDemo}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto cursor-pointer"
+                onClick={() => {
+                  console.log('Try Demo Now clicked')
+                  onDemo()
+                }}
+                type="button"
               >
                 Try Demo Now
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -64,8 +72,12 @@ export function LandingPage({ onDemo, onContact }: LandingPageProps) {
               <Button 
                 variant="outline"
                 size="lg"
-                className="border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/20 hover:text-cyan-200 hover:border-cyan-400 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl w-full sm:w-auto transition-all duration-300 bg-transparent"
-                onClick={onContact}
+                className="border-cyan-400/50 text-cyan-300 hover:bg-cyan-500/20 hover:text-cyan-200 hover:border-cyan-400 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-xl w-full sm:w-auto transition-all duration-300 bg-transparent cursor-pointer"
+                onClick={() => {
+                  console.log('Get in Touch clicked')
+                  onContact()
+                }}
+                type="button"
               >
                 Get in Touch
               </Button>
@@ -224,8 +236,12 @@ export function LandingPage({ onDemo, onContact }: LandingPageProps) {
             </p>
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={onDemo}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+              onClick={() => {
+                console.log('Start Your Journey Today clicked')
+                onDemo()
+              }}
+              type="button"
             >
               Start Your Journey Today
               <ArrowRight className="ml-2 w-5 h-5 sm:w-6 sm:h-6" />

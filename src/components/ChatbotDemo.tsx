@@ -157,11 +157,11 @@ Be specific, constructive, and provide concrete examples where possible. Format 
 
   const renderMarkdown = (content: string) => {
     return (
-      <ReactMarkdown 
-        className="markdown-content text-sm sm:text-base" 
-        rehypePlugins={[rehypeSanitize]}
-        remarkPlugins={[remarkGfm]}
-        components={{
+      <div className="markdown-content text-sm sm:text-base">
+        <ReactMarkdown 
+          rehypePlugins={[rehypeSanitize]}
+          remarkPlugins={[remarkGfm]}
+          components={{
           h1: ({node, ...props}) => <h1 {...props} className="text-xl font-bold my-3 text-purple-300" />,
           h2: ({node, ...props}) => <h2 {...props} className="text-lg font-bold my-2 text-purple-300" />,
           h3: ({node, ...props}) => <h3 {...props} className="text-md font-bold my-2 text-purple-300" />,
@@ -190,6 +190,7 @@ Be specific, constructive, and provide concrete examples where possible. Format 
       >
         {content}
       </ReactMarkdown>
+      </div>
     )
   }
 
